@@ -1,0 +1,16 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{DE6B5589-4ABA-128B-2FE6-F596D71611C4}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "NextRTS",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	]
+}
