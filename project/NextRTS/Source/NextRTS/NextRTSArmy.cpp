@@ -3,6 +3,8 @@
 #include "NextRTS.h"
 
 #include "Engine/StaticMesh.h"
+#include "Kismet/KismetMathLibrary.h"
+
 /**
 * @TODO We will need to overload this component class
 UHierarchicalInstancedStaticMeshComponentIndexed::UHierarchicalInstancedStaticMeshComponentIndexed(const FObjectInitializer& ObjectInitializer)
@@ -83,18 +85,19 @@ void ANextRTSArmy::Tick(float DeltaTime)
 	if (InstancedArmyMesh->GetStaticMesh())
 	{
 		const int32 numInstances = InstancedArmyMesh->GetInstanceCount();
-		const float t = FPlatformTime::Seconds() / 10.f;
+		const float t = FPlatformTime::Seconds();
+		static float pi_2 = UKismetMathLibrary::GetPI() / 2.0f;
 		for (int32 i = 0; i < numInstances; i++)
 		{
-			//test code
+			//move in circles
 			FTransform trans;
 			InstancedArmyMesh->GetInstanceTransform(i, trans);
 			float s, c;
 
 			FMath::SinCos(&s, &c, t);
-			s *= 1.f;
-			c *= 1.f;
-			trans.AddToTranslation(FVector(s, c, 0));
+			s *= pi_2;
+			c *= pi_2;
+			trans.AddToTranslation(FVector(c, s, 0));
 			InstancedArmyMesh->UpdateInstanceTransform(i, trans, false, i == numInstances - 1,
 													   true);
 
@@ -115,8 +118,7 @@ void ANextRTSArmy::PostEditChangeProperty(FPropertyChangedEvent& PropertyChanged
 		FString text;
 		text += text.Printf(TEXT("%d \r\n"), LODModel.GetNumVertices());
 		FRawMesh rawMesh;
-		InstancedArmyMesh->GetStaticMesh()->SourceModels[0].RawMeshBulkData->LoadRawMesh(rawMesh);
-		//FFileHelper::SaveStringToFile(text, TEXT("e:\\index.txt"));
+		InstancedArmyMesh->GetStaticMesh()->GetSourceModel(0).RawMeshBulkData->LoadRawMesh(rawMesh);
 		VertexIndicesMap.Empty();
 		for (int i = 0; i < LODModel.GetNumVertices(); i++)
 		{

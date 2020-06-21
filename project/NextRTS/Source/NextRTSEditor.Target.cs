@@ -9,6 +9,8 @@ public class NextRTSEditorTarget : TargetRules
 	{
 		Type = TargetType.Editor;
 		ExtraModuleNames.AddRange( new string[] { "NextRTS" } );
+
+		DefaultBuildSettings = BuildSettingsVersion.V2;
 	}
 
 }
