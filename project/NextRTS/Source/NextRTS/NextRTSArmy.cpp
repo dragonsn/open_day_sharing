@@ -87,10 +87,10 @@ void ANextRTSArmy::Tick(float DeltaTime)
 		const int32 numInstances = InstancedArmyMesh->GetInstanceCount();
 		const float t = FPlatformTime::Seconds();
 		static float pi_2 = UKismetMathLibrary::GetPI() / 2.0f;
+		FTransform trans;
 		for (int32 i = 0; i < numInstances; i++)
 		{
 			//move in circles
-			FTransform trans;
 			InstancedArmyMesh->GetInstanceTransform(i, trans);
 			float s, c;
 
